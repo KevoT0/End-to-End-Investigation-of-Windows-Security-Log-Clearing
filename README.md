@@ -40,7 +40,6 @@ I selected **Incident #5** (Active, host `win11a`, actor `PKWORK\mirage`) for fu
 
 The incident was raised by an **NRT (Near-Real-Time)** rule, which runs roughly every minute — unlike a scheduled rule that may run hourly. This is the correct rule type for log clearing: when an attacker wipes the security log, the SOC needs to know immediately, not up to an hour later, because log clearing almost always signals an attacker actively covering their tracks.
 
-> **Interview point:** "When would you use an NRT rule over a scheduled rule?" — log clearing is a textbook answer: high-severity, time-critical events where detection latency is dangerous.
 
 ---
 
