@@ -1,6 +1,6 @@
 # Incident Response: End-to-End Investigation of Windows Security Log Clearing
 
-**Author:** Kevin Akano ([Kevotech](https://github.com/KevoT0)) · **Lab environment:** Microsoft Sentinel Training Lab dataset
+**Lab environment:** Microsoft Sentinel Training Lab dataset
 **SC-200 domain:** Respond to security incidents
 **Detection surface:** Microsoft Sentinel (Defender portal) · Incident queue · NRT analytics rule
 
@@ -23,6 +23,8 @@ Performed in a lab tenant on the Sentinel Training Lab dataset. The incident, en
 ## Step 1 — Read the queue before opening anything
 
 Before drilling into a single incident, I reviewed the whole queue. A pattern was immediately visible: the actor **`mirage`** appeared across almost every incident, spanning multiple systems:
+
+![Incident queue: mirage appears across multiple incidents — AWS CLI execution, AWS Config deletion, and repeated Windows log clearing, all tagged Defense evasion — revealing one attacker's campaign](8.png)
 
 - Suspicious AWS CLI command execution (cloud activity)
 - AWS Config service resource deletion attempts (*Defense evasion* — deleting the service that records AWS changes)
@@ -61,6 +63,8 @@ Rather than trusting the alert title, I confirmed it against the underlying even
 | Account | PKWORK\mirage |
 | HostName | win11a |
 | EndTimeUtc | May 9, 2026 1:59:13 PM |
+
+![Incident graph linking mirage to win11a, with the Related events panel confirming EventID 1102 "audit log was cleared" at 1:59:13 PM](9.png)
 
 This is the actual Windows log record, not the alert's description of it. The alert is therefore **corroborated by raw evidence** — Event ID 1102, on `win11a`, by `mirage`, at 1:59:13 PM.
 
